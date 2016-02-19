@@ -12,4 +12,4 @@
 
 # How to run?
 
-Just run `vagrant up` and open http://127.0.0.7:3000
+Just run `vagrant up` and open http://127.0.0.1:3000
