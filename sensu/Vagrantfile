@@ -81,20 +81,19 @@ sensu-install -p disk-checks:1.0.2
 SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  #config.vm.box = "http://cis-kickstart.cisco.com/ccs-rhel-7.box"
   config.vm.box = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
   config.vm.provider "virtualbox" do |v|
     v.memory = 1024
   end
-  config.vm.define "server" do |server|
-      config.vm.network "private_network", ip: "192.168.56.101"
-      config.vm.network :forwarded_port, guest: 3000, host: 3000
-      #config.vm.synced_folder ".", "/opt/sensu-development/"
-      config.vm.provision "Server install", type: "shell", inline: $server_install
+  config.vm.define "server" do |s|
+      s.vm.network "private_network", ip: "192.168.56.101"
+      s.vm.network :forwarded_port, guest: 3000, host: 3000
+      #s.vm.synced_folder ".", "/opt/sensu-development/"
+      s.vm.provision "Server install", type: "shell", inline: $server_install
   end
-  config.vm.define "client" do |client|
-      config.vm.network "private_network", ip: "192.168.56.102"
-      #config.vm.synced_folder ".", "/opt/sensu-development/"
-      config.vm.provision "Server install", type: "shell", inline: $client_install
+  config.vm.define "client" do |c|
+      c.vm.network "private_network", ip: "192.168.56.102"
+      #c.vm.synced_folder ".", "/opt/sensu-development/"
+      c.vm.provision "Server install", type: "shell", inline: $client_install
   end
 end
