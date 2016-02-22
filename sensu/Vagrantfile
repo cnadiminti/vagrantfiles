@@ -51,11 +51,6 @@ echo '{
   }
 }' > /etc/sensu/uchiwa.json
 /etc/init.d/uchiwa start
-
-#wget -O /etc/sensu/conf.d/client.json http://sensuapp.org/docs/0.21/files/client.json
-#chown -R sensu:sensu /etc/sensu
-#sensu-install -p disk-checks:1.0.2
-#/etc/init.d/sensu-client start
 SCRIPT
 
 $client_install = <<SCRIPT
@@ -78,6 +73,10 @@ sed -ie s/localhost/192.168.56.101/ /etc/sensu/conf.d/client.json
 chown -R sensu:sensu /etc/sensu
 sensu-install -p disk-checks:1.0.2
 /etc/init.d/sensu-client start
+
+# Example external input
+echo '{"name": "app_01", "output": "could not connect to mysql", "status": 1}' > /dev/tcp/localhost/3030
+
 SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
