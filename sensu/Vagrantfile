@@ -3,101 +3,19 @@
 
 VAGRANTFILE_API_VERSION = "2"
 
-$server_install = <<SCRIPT
-apt-get update -y
-apt-get -y install wget
-wget http://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
-dpkg -i erlang-solutions_1.0_all.deb
-apt-get update
-apt-get -y install erlang-nox
-
-wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.0/rabbitmq-server_3.6.0-1_all.deb
-dpkg -i rabbitmq-server_3.6.0-1_all.deb
-update-rc.d rabbitmq-server defaults
-/etc/init.d/rabbitmq-server start
-rabbitmqctl add_vhost /sensu
-rabbitmqctl add_user sensu secret
-rabbitmqctl set_permissions -p /sensu sensu ".*" ".*" ".*"
-
-apt-get -y install redis-server
-
-wget -q http://repositories.sensuapp.org/apt/pubkey.gpg -O- | sudo apt-key add -
-echo "deb     http://repositories.sensuapp.org/apt sensu main" | sudo tee /etc/apt/sources.list.d/sensu.list
-apt-get update
-apt-get -y install sensu
-wget -O /etc/sensu/config.json http://sensuapp.org/docs/latest/files/config.json
-wget -O /etc/sensu/conf.d/check_disk.json http://sensuapp.org/docs/latest/files/check_disk.json
-wget -O /etc/sensu/conf.d/default_handler.json http://sensuapp.org/docs/latest/files/default_handler.json
-echo 'LOG_LEVEL=debug' >> /etc/default/sensu
-chown -R sensu:sensu /etc/sensu
-/etc/init.d/sensu-server start
-/etc/init.d/sensu-api start
-update-rc.d sensu-server defaults
-update-rc.d sensu-api defaults
-
-#wget http://dl.bintray.com/palourde/uchiwa/uchiwa_0.14.5-1_amd64.deb
-#dpkg -i uchiwa_0.14.5-1_amd64.deb
-apt-get -y install uchiwa
-
-echo '{
-  "sensu": [
-    {
-      "name": "Site 1",
-      "host": "0.0.0.0",
-      "port": 4567,
-      "timeout": 10
-    }
-  ],
-  "uchiwa": {
-    "host": "0.0.0.0",
-    "port": 3000,
-    "refresh": 10
-  }
-}' > /etc/sensu/uchiwa.json
-/etc/init.d/uchiwa restart
-SCRIPT
-
-$client_install = <<SCRIPT
-apt-get update
-wget -q http://repositories.sensuapp.org/apt/pubkey.gpg -O- | sudo apt-key add -
-echo "deb     http://repositories.sensuapp.org/apt sensu main" | sudo tee /etc/apt/sources.list.d/sensu.list
-apt-get update
-apt-get install sensu
-echo 'LOG_LEVEL=debug' >> /etc/default/sensu
-#wget -O /etc/sensu/config.json http://sensuapp.org/docs/0.21/files/config.json
-echo '{
-  "rabbitmq": {
-    "host": "192.168.56.101",
-    "vhost": "/sensu",
-    "user": "sensu",
-    "password": "secret"
-  }
-}' > /etc/sensu/config.json
-wget -O /etc/sensu/conf.d/client.json http://sensuapp.org/docs/latest/files/client.json
-sed -ie s/localhost/192.168.56.101/ /etc/sensu/conf.d/client.json
-chown -R sensu:sensu /etc/sensu
-sensu-install -p disk-checks
-/etc/init.d/sensu-client start
-
-# Example external input
-echo '{"name": "app_01", "output": "could not connect to mysql", "status": 1}' > /dev/tcp/localhost/3030
-
-SCRIPT
-
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+  config.vm.box = "centos/7"
   config.vm.provider "virtualbox" do |v|
     v.memory = 1024
   end
   config.vm.define "server" do |s|
       s.vm.network "private_network", ip: "192.168.56.101"
       s.vm.network :forwarded_port, guest: 3000, host: 3000
-      #s.vm.synced_folder ".", "/opt/sensu-development/"
-      s.vm.provision "Server install", type: "shell", inline: $server_install
+      s.vm.provision "shell", path: "server.sh"
   end
   config.vm.define "client" do |c|
       c.vm.network "private_network", ip: "192.168.56.102"
-      #c.vm.synced_folder ".", "/opt/sensu-development/"
-      c.vm.provision "Server install", type: "shell", inline: $client_install
+      c.vm.provision "shell", path: "client.sh"
   end
 end
