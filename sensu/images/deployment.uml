@@ -1,7 +1,7 @@
 @startuml
 title __Deployment Diagram (UML)__
 
-left to right direction
+'left to right direction
 
 node "<<device>> Server Node" as server #LightSteelBlue {
     node "<<OS>> Linux" as slinux #LightSalmon {
