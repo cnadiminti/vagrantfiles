@@ -1,14 +1,20 @@
 # What is it for?
 
-## server
+An example [Sensu](https://sensuapp.org/) deployment.
+
+## Server node
 - create a server VM
 - install and configure sensu-server along with dependencies
 - install uchiwa
 
-## client
+## Client node
 - create a client VM
 - install and configure sensu-client
 - install example plugin
+
+## Deployment diagram
+
+![Deployment Diagram](images/deployment.png)
 
 # How to run?
 

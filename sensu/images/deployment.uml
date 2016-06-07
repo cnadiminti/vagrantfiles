@@ -1,0 +1,31 @@
+@startuml
+title __Deployment Diagram (UML)__
+
+left to right direction
+
+node "<<device>> Server Node" as server #LightSteelBlue {
+    node "<<OS>> Linux" as slinux #LightSalmon {
+    
+        node "<<service>> sensu-server" as ser #Aqua
+        node "<<service>> sensu-api" as api #Aqua
+        node "<<service>> uchiwa" as uch #Aqua
+        node "<<service>> rabbitmq" as rab #Aqua
+        node "<<service>> redis" as red #Aqua
+    }
+}
+
+node "<<device>> Client Node" as client #LightSteelBlue {
+    node "<<OS>> Linux" as clinux #LightSalmon {
+        node "<<service>> sensu-client" as cli #Aqua
+    }
+}
+
+uch -up-> api : REST
+api -up-> red
+api -up-> rab
+
+cli <--> rab : AMQP Connection
+rab <--> ser
+ser --> red
+
+@enduml
