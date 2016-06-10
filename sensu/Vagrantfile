@@ -16,6 +16,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
   config.vm.define "client" do |c|
       c.vm.network "private_network", ip: "192.168.56.102"
-      c.vm.provision "shell", path: "client.sh"
+      c.vm.provision "shell", path: "client.sh", args: "192.168.56.101"
   end
 end

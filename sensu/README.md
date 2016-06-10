@@ -18,4 +18,10 @@ An example [Sensu](https://sensuapp.org/) deployment.
 
 # How to run?
 
+#### vagrant
+
 Just run `vagrant up` and open http://127.0.0.1:3000
+
+#### docker-compose
+
+Just run `docker-compose up` and open http://127.0.0.1:3000

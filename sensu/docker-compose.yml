@@ -1,0 +1,33 @@
+rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+        - RABBITMQ_DEFAULT_VHOST=/sensu
+        - RABBITMQ_DEFAULT_USER=sensu
+        - RABBITMQ_DEFAULT_PASS=secret
+    ports:
+        - "15672:15672"
+
+redis:
+    image: redis
+
+sensu-server:
+    #image: ubuntu:14.04
+    image: centos:7
+    volumes:
+        - ./:/root
+    entrypoint: ["/root/server.sh"]
+    ports:
+        - "3000:3000"
+    links:
+        - redis
+        - rabbitmq
+
+sensu-client:
+    #image: ubuntu:14.04
+    image: centos:7
+    volumes:
+        - ./:/root
+    entrypoint: ["/root/client.sh"]
+    links:
+        - sensu-server
+        - rabbitmq
