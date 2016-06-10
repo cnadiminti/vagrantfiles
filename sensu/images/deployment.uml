@@ -17,8 +17,13 @@ node "<<device>> Server Node" as server #LightSteelBlue {
 node "<<device>> Client Node" as client #LightSteelBlue {
     node "<<OS>> Linux" as clinux #LightSalmon {
         node "<<service>> sensu-client" as cli #Aqua
+        node "<<process>> plugin-1" as p1 #lightgreen
+        node "<<process>> plugin-2" as p2 #lightgreen
     }
 }
+
+p1 --> cli
+p2 --> cli
 
 uch -up-> api : REST
 api -up-> red
