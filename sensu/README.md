@@ -14,7 +14,8 @@ An example [Sensu](https://sensuapp.org/) deployment.
 
 ## Deployment diagram
 
-![Deployment Diagram](images/deployment.png)
+![Deployment Diagram for Vagrant](images/deployment.png)
+![Deployment Diagram for Docker](images/deployment_docker.png)
 
 # How to run?
 
