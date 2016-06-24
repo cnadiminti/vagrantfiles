@@ -1,0 +1,33 @@
+@startuml
+title __Deployment Diagram for Sensu in Dockers (UML)__
+
+'left to right direction
+
+node "<<Docker Container>> Linux" as Server #LightSalmon {
+    node "<<service>> sensu-api" as api #Aqua
+    node "<<service>> sensu-server" as ser #Aqua
+    node "<<service>> uchiwa" as uch #Aqua
+}
+node "<<Docker Container>> Linux" as Client #LightSalmon {
+    node "<<service>> sensu-client" as cli #Aqua
+    node "<<process>> plugin-1" as p1 #lightgreen
+    node "<<process>> plugin-2" as p2 #lightgreen
+}
+node "<<Docker Container>> Linux" as Rabbitmq #LightSalmon {
+    node "<<service>> rabbitmq" as rab #Aqua
+}
+node "<<Docker Container>> Linux" as Redis #LightSalmon {
+    node "<<service>> redis" as red #Aqua
+}
+p1 -up-> cli
+p2 -up-> cli
+
+uch -right-> api : REST
+api --> red
+api --> rab
+
+cli <-up-> rab : AMQP Connection
+rab <-up-> ser
+ser --> red
+
+@enduml
