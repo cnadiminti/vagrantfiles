@@ -35,7 +35,7 @@ elif [ -f /etc/redhat-release ]; then
     # Redhat/CentOS
     echo "Redhat ... "
     #epel-release
-    rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm
+    rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-7.noarch.rpm
     yum install -y initscripts logrotate wget
     if [ ! -f /.dockerenv ]; then
         #erlang
