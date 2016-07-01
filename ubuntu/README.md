@@ -1,0 +1,6 @@
+# Ubuntu
+
+
+```
+vagrant up
+```
