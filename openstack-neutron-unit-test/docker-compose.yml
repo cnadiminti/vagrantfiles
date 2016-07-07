@@ -1,0 +1,8 @@
+"openstack-neutron":
+  build: .
+  volumes: 
+    - ./neutron:/openstack-neutron
+  working_dir: /openstack-neutron
+  entrypoint: tox -vvv -epy27
+# tox -vvv -epy27
+# ./run_tests.sh -V -f
