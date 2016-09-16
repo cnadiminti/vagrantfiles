@@ -2,6 +2,8 @@
 
 An example [Sensu](https://sensuapp.org/) deployment.
 
+:information_source: Last verified with Sensu 0.26.1-1.
+
 ## Server node
 - create a server VM
 - install and configure sensu-server along with dependencies
@@ -29,6 +31,3 @@ Just run `vagrant up` and open http://127.0.0.1:3000
 #### docker-compose
 
 Just run `docker-compose up` and open http://127.0.0.1:3000
-
-
-:information_source: Last verified with Sensu 0.26.1-1.
