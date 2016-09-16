@@ -35,7 +35,7 @@ elif [ -f /etc/redhat-release ]; then
     # Redhat/CentOS
     echo "Redhat ... "
     #epel-release
-    rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-7.noarch.rpm
+    yum install -y epel-release
     yum install -y initscripts logrotate wget
     if [ ! -f /.dockerenv ]; then
         #erlang
@@ -99,7 +99,7 @@ echo 'LOG_LEVEL=debug' >> /etc/default/sensu
 echo '{
 "sensu": [
   {
-    "name": "Site 1",
+    "name": "cnadiminti DS-1",
     "host": "0.0.0.0",
     "port": 4567,
     "timeout": 10
@@ -108,7 +108,11 @@ echo '{
   "uchiwa": {
     "host": "0.0.0.0",
     "port": 3000,
-    "refresh": 10
+    "refresh": 10,
+    "ssl": {
+      "certfile": "/root/uchiwa.pem",
+      "keyfile": "/root/uchiwa.key"
+    }
   }
 }' > /etc/sensu/uchiwa.json
 chown -R sensu:sensu /etc/sensu

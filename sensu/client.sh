@@ -14,7 +14,7 @@ if [ -f /etc/debian_version ]; then
 elif [ -f /etc/redhat-release ]; then
     # Redhat/CentOS
     echo "Redhat/CentOS ... "
-    rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-7.noarch.rpm
+    yum install -y epel-release
     yum install -y initscripts logrotate wget
     # sensu core
     echo '[sensu]
