@@ -1,3 +1,6 @@
+[![Code Climate](https://codeclimate.com/github/cnadiminti/vagrantfiles/badges/gpa.svg)](https://codeclimate.com/github/cnadiminti/vagrantfiles)
+[![Issue Count](https://codeclimate.com/github/cnadiminti/vagrantfiles/badges/issue_count.svg)](https://codeclimate.com/github/cnadiminti/vagrantfiles)
+
 # vagrantfiles
 
 A collection of Vagrantfiles
