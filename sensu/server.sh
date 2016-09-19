@@ -58,6 +58,7 @@ elif [ -f /etc/redhat-release ]; then
         redis-cli ping
     fi
     # sensu core
+    # shellcheck disable=SC2016
     echo '[sensu]
 name=sensu
 baseurl=http://repositories.sensuapp.org/yum/$basearch/

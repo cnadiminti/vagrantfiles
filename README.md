@@ -2,15 +2,18 @@
 
 A collection of Vagrantfiles
 
-### Ubuntu
+## Ubuntu
+
 [ubuntu](ubuntu/README.md)
 
-### CentOS
+## CentOS
+
 [centos](centos/README.md)
 
-### Sensu
+## Sensu
+
 [sensu](sensu/README.md)
 
-### OpenStack/DevStack
-[devstack](devstack/README.md)
+## OpenStack/DevStack
 
+[devstack](devstack/README.md)

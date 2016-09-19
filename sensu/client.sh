@@ -17,6 +17,7 @@ elif [ -f /etc/redhat-release ]; then
     yum install -y epel-release
     yum install -y initscripts logrotate wget
     # sensu core
+    # shellcheck disable=SC2016
     echo '[sensu]
 name=sensu
 baseurl=http://repositories.sensuapp.org/yum/$basearch/
@@ -39,7 +40,7 @@ echo "{
   }
 }" > /etc/sensu/config.json
 wget -O /etc/sensu/conf.d/client.json http://sensuapp.org/docs/latest/files/client.json
-sed -i -e s/localhost/`hostname`/ /etc/sensu/conf.d/client.json
+sed -i -e s/localhost/"$(hostname)"/ /etc/sensu/conf.d/client.json
 chown -R sensu:sensu /etc/sensu
 sensu-install -p disk-checks
 

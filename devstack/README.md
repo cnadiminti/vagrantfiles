@@ -2,7 +2,14 @@
 
 Install OpenStack for development purpose using [devstack](http://docs.openstack.org/developer/devstack)
 
-Run `vagrant up`, wait for the complete installation (go get some coffee) and login <http://localhost:8080/dashboard>  using Username: `admin` or `demo`, Password: `password`
+## How to Run
 
-Explore more inside the [local.conf](https://raw.githubusercontent.com/cnadiminti/vagrantfiles/master/devstack/local.conf)
+1. Run `vagrant up`,
+2. Wait for the complete installation (go get some coffee), and
+3. Login <http://localhost:8080/dashboard> using
+  - Username: `admin` or `demo`,
+  - Password: `password`
 
+## Want to Do More
+
+Explore inside the [local.conf](https://raw.githubusercontent.com/cnadiminti/vagrantfiles/master/devstack/local.conf)

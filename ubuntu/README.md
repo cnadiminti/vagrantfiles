@@ -1,6 +1,5 @@
 # Ubuntu
 
-
 ```
 vagrant up
 ```
